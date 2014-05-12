@@ -8,6 +8,7 @@ Created By DeamonHunter.
 Current Version V1.1
 
 *Changelog*
+
 1.1 Small Changes
 
 Added a checkbox to show the Debug window. You now no longer have to close these whenever you do more than one song.
