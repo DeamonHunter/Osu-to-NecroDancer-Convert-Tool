@@ -8,3 +8,13 @@ C:\Users\user\Documents\Visual Studio 2013\Projects\WindowsFormsApplication2\Win
 C:\Users\user\Documents\Visual Studio 2013\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.exe
 C:\Users\user\Documents\Visual Studio 2013\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.pdb
 C:\Users\user\Documents\Visual Studio 2013\Projects\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\Deamon's conversion tool.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.exe.config
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.exe
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Debug\Deamon's conversion tool.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Form1.resources
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Form2.resources
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Properties.Resources.resources
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Debug\Deamon's conversion tool.csproj.GenerateResource.Cache
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.exe
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.pdb

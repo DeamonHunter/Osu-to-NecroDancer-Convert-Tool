@@ -40,6 +40,7 @@ namespace WindowsFormsApplication2
             {
                 ofd.InitialDirectory = "C:\\Program Files\\osu!\\Songs";
             }
+
             ofd.RestoreDirectory = true; //Just to make sure that multiple runs come to the same directory. It may be unneeded.
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -102,7 +103,14 @@ namespace WindowsFormsApplication2
             {
                 string musicOriginalPath = fileToOpen.Remove(fileToOpen.LastIndexOf("\\")) + "\\" + nameOfFileExt.Remove(0,1);
                 string musicFilePath = fileToSave.Remove(fileToSave.LastIndexOf(".txt")) + ".mp3";
-                System.IO.File.Copy(musicOriginalPath, musicFilePath, true);
+                try
+                {
+                    System.IO.File.Copy(musicOriginalPath, musicFilePath, true);
+                }
+                catch
+                {
+                    MessageBox.Show("Error: Unable to move file. File may be missing or the program may not have permission.", "Error");
+                }
             }
 
             Form2 f2 = new Form2(); //Calls forth the debug form. Needed otherwise the code will complain that it hasn't been called.
