@@ -272,7 +272,8 @@
             this.comboBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.comboBox1.Items.AddRange(new object[] {
             "Osu Files",
-            "Nothing (An option to be added later)"});
+            "Nothing (An option to be added later)",
+            "Manual"});
             this.comboBox1.Location = new System.Drawing.Point(9, 70);
             this.comboBox1.MaxDropDownItems = 2;
             this.comboBox1.Name = "comboBox1";

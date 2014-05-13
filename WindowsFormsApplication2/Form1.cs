@@ -336,13 +336,13 @@ namespace WindowsFormsApplication2
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedIndex = (int)comboBox1.SelectedIndex;
-            switch (selectedIndex)
+            selectedIndex = (int)comboBox1.SelectedIndex; //Upon the combobox updating, it will check the value.
+            switch (selectedIndex) //It then sets the value for the program to use while setting up the final parts in most steps.
             {
-                case 0:
+                case 0: //The Default, .osu files.
                     label3.Text = "Open a .osu file from your preferred song.";
-                    convertOkButton.Enabled = false;
-                    openOsuFileButton.Enabled = true;
+                    convertOkButton.Enabled = false; 
+                    openOsuFileButton.Enabled = true; //Makes sure that all steps are set up properly so program does not break.
                     saveLocationButton.Enabled = false;
                     textBox1.Text = "Please select a .osu file for the program to convert.";
                     textBox1.Enabled = false;
@@ -352,12 +352,25 @@ namespace WindowsFormsApplication2
                     checkBox2.Checked = false;
                     showDebugCheckBox.Checked = false;
                     break;
-                case 1:
+                case 1: //To be decided.
                     label3.Text = "Open a *To Be dicided* file from your preferred song.";
                     convertOkButton.Enabled = false;
                     openOsuFileButton.Enabled = false;
                     saveLocationButton.Enabled = false;
                     textBox1.Text = "This option is not available just yet.";
+                    textBox1.Enabled = false;
+                    textBox2.Enabled = false;
+                    textBox2.Text = "";
+                    checkBox1.Checked = false;
+                    checkBox2.Checked = false;
+                    showDebugCheckBox.Checked = false;
+                    break;
+                case 2: //Will open up a new form with the ability to have manually set options. (Coming Soon).
+                    label3.Text = "Manual editing.";
+                    convertOkButton.Enabled = false;
+                    openOsuFileButton.Enabled = false;
+                    saveLocationButton.Enabled = false;
+                    textBox1.Text = "This option opens up a new form.";
                     textBox1.Enabled = false;
                     textBox2.Enabled = false;
                     textBox2.Text = "";
