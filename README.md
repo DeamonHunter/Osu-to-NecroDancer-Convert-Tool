@@ -4,10 +4,12 @@ Osu-to-NecroDancer-Convert-Tool
 Converts .osu files to the NecroDancer Format. Info Can be found here http://braceyourselfgames.com/forums/viewtopic.php?f=5&t=314&p=3600#p3600
 
 Created By DeamonHunter.
+Exe can be found in WindowsFormApplication2\bin\Release
 
-Current Version V1.1
+Current Version V1.2
 
 *Changelog*
+1.2 Added ability for multiple types of conversion
 
 1.1 Small Changes
 
