@@ -9,6 +9,7 @@ Exe can be found in WindowsFormApplication2\bin\Release
 Current Version V1.2
 
 *Changelog*
+
 1.2 Added ability for multiple types of conversion
 
 1.1 Small Changes
