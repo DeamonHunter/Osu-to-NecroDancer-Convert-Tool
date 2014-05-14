@@ -8,3 +8,4 @@ C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert T
 C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Release\Deamon's conversion tool.csproj.GenerateResource.Cache
 C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.exe
 C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.pdb
+C:\Users\user\Documents\Visual Studio 2013\Projects\Osu to NecroDancer Convert Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Manual_Editer.resources

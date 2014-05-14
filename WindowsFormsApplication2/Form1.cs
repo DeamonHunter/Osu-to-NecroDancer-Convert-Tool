@@ -366,6 +366,8 @@ namespace WindowsFormsApplication2
                     showDebugCheckBox.Checked = false;
                     break;
                 case 2: //Will open up a new form with the ability to have manually set options. (Coming Soon).
+                    Manual_Editer f3 = new Manual_Editer();
+                    f3.Show();
                     label3.Text = "Manual editing.";
                     convertOkButton.Enabled = false;
                     openOsuFileButton.Enabled = false;
