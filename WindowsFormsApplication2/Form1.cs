@@ -26,7 +26,7 @@ namespace WindowsFormsApplication2
         //Declares a few variables to use
         string fileToOpen, fileToSave, nameOfFile, nameOfFileExt;
         int selectedIndex;
-        bool is64;
+        static public bool is64;
         OpenFileDialog ofd = new OpenFileDialog(); //Creates an open File dialog for program to manipulate.
 
         private void openOsuFileButton_Click(object sender, EventArgs e)

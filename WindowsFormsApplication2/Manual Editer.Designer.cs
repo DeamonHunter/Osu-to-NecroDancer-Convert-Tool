@@ -70,11 +70,11 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(12, 9);
+            this.label10.Location = new System.Drawing.Point(23, 9);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(248, 17);
+            this.label10.Size = new System.Drawing.Size(375, 17);
             this.label10.TabIndex = 19;
-            this.label10.Text = "Manual Editor: Choose what you want.";
+            this.label10.Text = "Manual Editor: A Robust method to choose what you want.";
             // 
             // linkLabel1
             // 
@@ -111,7 +111,7 @@
             0,
             0,
             0});
-            this.bpmUpDown.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.bpmUpDown.ValueChanged += new System.EventHandler(this.bpmUpDown_ValueChanged);
             // 
             // label1
             // 
@@ -150,6 +150,7 @@
             this.offsetUpDown.Size = new System.Drawing.Size(120, 20);
             this.offsetUpDown.TabIndex = 24;
             this.offsetUpDown.ThousandsSeparator = true;
+            this.offsetUpDown.ValueChanged += new System.EventHandler(this.offsetUpDown_ValueChanged);
             // 
             // label3
             // 
@@ -182,6 +183,7 @@
             this.minutesUpDown.Name = "minutesUpDown";
             this.minutesUpDown.Size = new System.Drawing.Size(120, 20);
             this.minutesUpDown.TabIndex = 30;
+            this.minutesUpDown.ValueChanged += new System.EventHandler(this.minutesUpDown_ValueChanged);
             // 
             // secondsUpDown
             // 
@@ -200,6 +202,7 @@
             this.secondsUpDown.Size = new System.Drawing.Size(120, 20);
             this.secondsUpDown.TabIndex = 31;
             this.secondsUpDown.ThousandsSeparator = true;
+            this.secondsUpDown.ValueChanged += new System.EventHandler(this.secondsUpDown_ValueChanged);
             // 
             // millisecondsUpDown
             // 
@@ -218,6 +221,7 @@
             this.millisecondsUpDown.Size = new System.Drawing.Size(120, 20);
             this.millisecondsUpDown.TabIndex = 32;
             this.millisecondsUpDown.ThousandsSeparator = true;
+            this.millisecondsUpDown.ValueChanged += new System.EventHandler(this.millisecondsUpDown_ValueChanged);
             // 
             // label5
             // 
@@ -269,6 +273,7 @@
             this.openManualButton.TabIndex = 37;
             this.openManualButton.Text = "Open";
             this.openManualButton.UseVisualStyleBackColor = true;
+            this.openManualButton.Click += new System.EventHandler(this.openManualButton_Click);
             // 
             // saveManualButton
             // 
@@ -278,6 +283,7 @@
             this.saveManualButton.TabIndex = 38;
             this.saveManualButton.Text = "Save";
             this.saveManualButton.UseVisualStyleBackColor = true;
+            this.saveManualButton.Click += new System.EventHandler(this.saveManualButton_Click);
             // 
             // manualConvertButton
             // 
@@ -288,6 +294,7 @@
             this.manualConvertButton.TabIndex = 39;
             this.manualConvertButton.Text = "Convert";
             this.manualConvertButton.UseVisualStyleBackColor = true;
+            this.manualConvertButton.Click += new System.EventHandler(this.manualConvertButton_Click);
             // 
             // label9
             // 
@@ -326,7 +333,7 @@
             // 
             // bpmChangeUpDown
             // 
-            this.bpmChangeUpDown.Location = new System.Drawing.Point(290, 210);
+            this.bpmChangeUpDown.Location = new System.Drawing.Point(290, 264);
             this.bpmChangeUpDown.Maximum = new decimal(new int[] {
             10,
             0,
@@ -335,26 +342,27 @@
             this.bpmChangeUpDown.Name = "bpmChangeUpDown";
             this.bpmChangeUpDown.Size = new System.Drawing.Size(120, 20);
             this.bpmChangeUpDown.TabIndex = 45;
+            this.bpmChangeUpDown.ValueChanged += new System.EventHandler(this.bpmChangeUpDown_ValueChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(89, 210);
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(12, 264);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(143, 17);
+            this.label12.Size = new System.Drawing.Size(273, 15);
             this.label12.TabIndex = 47;
-            this.label12.Text = "Bpm Change per bar:";
+            this.label12.Text = "Bpm Change per bar (Overwrites settings above):";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(89, 236);
+            this.label13.Location = new System.Drawing.Point(161, 210);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(71, 17);
+            this.label13.Size = new System.Drawing.Size(123, 17);
             this.label13.TabIndex = 48;
-            this.label13.Text = "New Bpm:";
+            this.label13.Text = "Bpm to change to:";
             // 
             // newBpmUpDown
             // 
@@ -363,7 +371,7 @@
             0,
             0,
             0});
-            this.newBpmUpDown.Location = new System.Drawing.Point(290, 236);
+            this.newBpmUpDown.Location = new System.Drawing.Point(290, 210);
             this.newBpmUpDown.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -372,6 +380,7 @@
             this.newBpmUpDown.Name = "newBpmUpDown";
             this.newBpmUpDown.Size = new System.Drawing.Size(120, 20);
             this.newBpmUpDown.TabIndex = 49;
+            this.newBpmUpDown.ValueChanged += new System.EventHandler(this.newBpmUpDown_ValueChanged);
             // 
             // newOffsetUpDown
             // 
@@ -380,7 +389,7 @@
             0,
             0,
             0});
-            this.newOffsetUpDown.Location = new System.Drawing.Point(290, 262);
+            this.newOffsetUpDown.Location = new System.Drawing.Point(290, 236);
             this.newOffsetUpDown.Maximum = new decimal(new int[] {
             10000000,
             0,
@@ -390,16 +399,17 @@
             this.newOffsetUpDown.Size = new System.Drawing.Size(120, 20);
             this.newOffsetUpDown.TabIndex = 50;
             this.newOffsetUpDown.ThousandsSeparator = true;
+            this.newOffsetUpDown.ValueChanged += new System.EventHandler(this.newOffsetUpDown_ValueChanged);
             // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(89, 262);
+            this.label14.Location = new System.Drawing.Point(60, 236);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(132, 17);
+            this.label14.Size = new System.Drawing.Size(224, 17);
             this.label14.TabIndex = 51;
-            this.label14.Text = "Offset for new Bpm:";
+            this.label14.Text = "Offset for new Bpm (MilliSeconds):";
             // 
             // Manual_Editer
             // 
