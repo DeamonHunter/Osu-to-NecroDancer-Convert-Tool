@@ -6,9 +6,11 @@ Converts .osu files to the NecroDancer Format. Info Can be found here http://bra
 Created By DeamonHunter.
 Exe can be found in WindowsFormApplication2\bin\Release
 
-Current Version V1.2
+Current Version V2
 
 *Changelog*
+
+2 Added a manual editor
 
 1.2 Added ability for multiple types of conversion
 
@@ -20,4 +22,3 @@ Added a check that whenever you change the file to load, that it will lock out t
 
 Added ALOT of Comments.
 
-1.0   Initial Version
