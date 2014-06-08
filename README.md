@@ -6,9 +6,11 @@ Converts .osu files to the NecroDancer Format. Info Can be found here http://bra
 Created By DeamonHunter.
 Exe can be found in WindowsFormApplication2\bin\Release
 
-Current Version V2
+Current Version V2.1
 
 *Changelog*
+
+2.1 Fixed a crash concerning trying to convert a double to int.
 
 2 Added a manual editor
 
