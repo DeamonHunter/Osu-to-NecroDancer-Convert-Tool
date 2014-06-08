@@ -141,10 +141,10 @@ namespace WindowsFormsApplication2
                 case 0:
                     f2.enterDetails("Starting sequence for .osu files.");
                     bool found = false, continueRead = true, finishTimeFound = false, firstRun = true;
-                    int lines = 0, carryOverOffset = 0, position;
+                    int lines = 0, position;
                     string carryOverLine = "", line;
                     char comma = Convert.ToChar(",");
-                    double bpmMilliseconds, carryOverBpm = 0, time = 0, startOffset = 0;
+                    double bpmMilliseconds, carryOverBpm = 0, time = 0, carryOverOffset = 0, startOffset = 0;
                     //A whole lot of variables called for the remainder of this function.
                     //Some of these may be unnecessary. I need help to clean it up.
 
@@ -183,7 +183,7 @@ namespace WindowsFormsApplication2
                             position = tempLine3.IndexOf(",");
                             tempLine3 = tempLine3.Remove(tempLine3.IndexOf(",")); //cuts the line from the first "," point.
                             f2.enterDetails("Shortened Temporary Line to " + tempLine3);
-                            startOffset = Convert.ToInt32(tempLine3); //Converts to an int.
+                            startOffset = Convert.ToDouble(tempLine3); //Converts to an int.
                             f2.enterDetails("First offset is " + startOffset);
 
                             position = line.IndexOf(",");
@@ -256,7 +256,7 @@ namespace WindowsFormsApplication2
                                 f2.enterDetails("Changed temporary line to " + tempLine2);
                                 tempLine2 = tempLine2.Remove(tempLine2.IndexOf(",")); //Removes the rest of the line.
                                 f2.enterDetails("Changed temp line to " + tempLine2);
-                                carryOverOffset = Convert.ToInt32(tempLine2);
+                                carryOverOffset = Convert.ToDouble(tempLine2);
                                 f2.enterDetails("The song length is " + carryOverOffset + " milliseconds");
                                 carryOverBpm = bpmMilliseconds; //Sets the bpm to this to get out of while loop
                                 f2.enterDetails("Set Bpm to " + bpmMilliseconds);
@@ -274,7 +274,7 @@ namespace WindowsFormsApplication2
                                 f2.enterDetails("The new bpm will be " + carryOverBpm);
                                 tempLine2 = carryOverLine;
                                 f2.enterDetails("Resetting temporary line to " + tempLine2);
-                                carryOverOffset = Convert.ToInt32(tempLine2.Remove(position));
+                                carryOverOffset = Convert.ToDouble(tempLine2.Remove(position));
                                 f2.enterDetails("The new offset will be " + carryOverOffset);
                             }
                         }
