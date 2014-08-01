@@ -79,11 +79,18 @@ namespace WindowsFormsApplication2
                     default:
                         break;
                 }
-                textBox2.Text = nameOfFile; //Sets the second textbox to have the file name. unessesary but is a little bit of feedback.
-                saveLocationButton.Enabled = true; //Activates 2nd step button.
-                convertOkButton.Enabled = false; //Incase the program has already ran through once.
-                textBox1.Enabled = true;
-                textBox2.Enabled = false;
+                if (nameOfFileExt.IndexOf(".mp3") != -1)
+                {
+                    textBox2.Text = nameOfFile; //Sets the second textbox to have the file name. unessesary but is a little bit of feedback.
+                    saveLocationButton.Enabled = true; //Activates 2nd step button.
+                    convertOkButton.Enabled = false; //Incase the program has already ran through once.
+                    textBox1.Enabled = true;
+                    textBox2.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("This beatmap does not use a supported music file type of NecroDancer.");
+                }
             }
         }
 
@@ -94,7 +101,7 @@ namespace WindowsFormsApplication2
             ofd.AddExtension = true; //Makes sure to set the extension to .txt no matter what.
             ofd.DefaultExt = ".txt";
             ofd.RestoreDirectory = true;
-            ofd.FileName = nameOfFile;
+            ofd.FileName = nameOfFileExt.ToUpper() + ".TXT";
             if (is64)
             {
                 ofd.InitialDirectory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Crypt of the NecroDancer\\data\\custom_music";
@@ -104,10 +111,15 @@ namespace WindowsFormsApplication2
                 ofd.InitialDirectory = "C:\\Program Files\\Steam\\steamapps\\common\\Crypt of the NecroDancer\\data\\custom_music";
             }
 
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK && ofd.FileName.IndexOf(".txt") != -1)
             {
                 textBox2.Text = ofd.FileName; //Sets the final path of the file to save.
                 fileToSave = ofd.FileName;
+            }
+            else if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                textBox2.Text = ofd.FileName + ".txt"; //Sets the final path of the file to save.
+                fileToSave = ofd.FileName + ".txt";
             }
             convertOkButton.Enabled = true; //Activates step 4 button.
             textBox2.Enabled = true;
@@ -119,7 +131,7 @@ namespace WindowsFormsApplication2
             if (checkBox1.Checked) //If copy file was selected then it copies the file with a few edited values.
             {
                 string musicOriginalPath = fileToOpen.Remove(fileToOpen.LastIndexOf("\\")) + "\\" + nameOfFileExt.Remove(0, 1);
-                string musicFilePath = fileToSave.Remove(fileToSave.LastIndexOf(".txt")) + ".mp3";
+                string musicFilePath = fileToSave.Remove(fileToSave.LastIndexOf(".txt"));
                 try //Added some error catching. Just in case file is non existant.
                 {
                     System.IO.File.Copy(musicOriginalPath, musicFilePath, true);
@@ -352,8 +364,8 @@ namespace WindowsFormsApplication2
                     checkBox2.Checked = false;
                     showDebugCheckBox.Checked = false;
                     break;
-                case 1: //To be decided.
-                    label3.Text = "Open a *To Be dicided* file from your preferred song.";
+                case 2: //To be decided.
+                    label3.Text = "Open a *To Be decided* file from your preferred song.";
                     convertOkButton.Enabled = false;
                     openOsuFileButton.Enabled = false;
                     saveLocationButton.Enabled = false;
@@ -365,7 +377,7 @@ namespace WindowsFormsApplication2
                     checkBox2.Checked = false;
                     showDebugCheckBox.Checked = false;
                     break;
-                case 2: //Will open up a new form with the ability to have manually set options. (Coming Soon).
+                case 1: //Will open up a new form with the ability to have manually set options. (Coming Soon).
                     Manual_Editer f3 = new Manual_Editer();
                     f3.Show();
                     label3.Text = "Manual editing.";
