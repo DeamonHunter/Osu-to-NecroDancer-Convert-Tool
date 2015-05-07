@@ -23,10 +23,11 @@ namespace WindowsFormsApplication2
         {
             InitializeComponent();
             //This if statement checks if the directory exists. 
-            //It assumes that both necrodancer folder and osu folder are within the directory
             
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"))
+            //This is to find the initial directories of both the osu opener and the cotn opener.
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt")) //Sees if a settings file exists.
             {
+                //If it does, it opens it up and reads the two lines within
                 StreamReader sr = new StreamReader(File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
                 OsuDef = sr.ReadLine();
                 CotNDef = sr.ReadLine();
@@ -34,23 +35,29 @@ namespace WindowsFormsApplication2
             }
             else
             {
+                //If it doesn't, it attempts to create the file (and the directory)
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool");
                 StreamWriter sw = new StreamWriter(File.Create(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
+
+                //This then calls form 3 and waits for the user to input
                 Form3 f3 = new Form3();
                 f3.ShowDialog();
+
+                //After inputting variables, these are then defined...
                 OsuDef = f3.OsuDef;
                 CotNDef = f3.CotNDef;
+                //then written into the file
                 sw.WriteLine(OsuDef);
                 sw.WriteLine(CotNDef);
                 sw.Flush();
                 sw.Dispose();
             }
 
-            ofdOsu.InitialDirectory = OsuDef; //Sets default path
+            ofdOsu.InitialDirectory = OsuDef; //Sets default path for the osu button
             ofdOsu.Filter = "Osu Beatmap File|*.osu"; //Sets the default to only show .osu files.
             ofdOsu.RestoreDirectory = false;
 
-            sfdCotn.InitialDirectory = CotNDef ;
+            sfdCotn.InitialDirectory = CotNDef; //Sets default path for the sotn button
             sfdCotn.Filter = "Text Files|*.txt";
             sfdCotn.AddExtension = true; //Makes sure to set the extension to .txt no matter what.
             sfdCotn.DefaultExt = ".txt";
