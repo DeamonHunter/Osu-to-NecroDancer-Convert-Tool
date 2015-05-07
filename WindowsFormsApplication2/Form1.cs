@@ -13,52 +13,63 @@ namespace WindowsFormsApplication2
 {
     public partial class Form1 : Form
     {
+        //Declares a few variables to use
+        string fileToOpen, fileToSave, nameOfFile, nameOfFileExt;
+        int selectedIndex;
+        static public bool is64;
+        public string CotNDef, OsuDef;
+
         public Form1()
         {
             InitializeComponent();
             //This if statement checks if the directory exists. 
             //It assumes that both necrodancer folder and osu folder are within the directory
-            if (Directory.Exists("C:/Program Files (x86)"))
+            
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"))
             {
-                is64 = true;               
+                StreamReader sr = new StreamReader(File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
+                OsuDef = sr.ReadLine();
+                CotNDef = sr.ReadLine();
+                sr.Dispose();
             }
+            else
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool");
+                StreamWriter sw = new StreamWriter(File.Create(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
+                Form3 f3 = new Form3();
+                f3.ShowDialog();
+                OsuDef = f3.OsuDef;
+                CotNDef = f3.CotNDef;
+                sw.WriteLine(OsuDef);
+                sw.WriteLine(CotNDef);
+                sw.Flush();
+                sw.Dispose();
+            }
+
+            ofdOsu.InitialDirectory = OsuDef; //Sets default path
+            ofdOsu.Filter = "Osu Beatmap File|*.osu"; //Sets the default to only show .osu files.
+            ofdOsu.RestoreDirectory = false;
+
+            sfdCotn.InitialDirectory = CotNDef ;
+            sfdCotn.Filter = "Text Files|*.txt";
+            sfdCotn.AddExtension = true; //Makes sure to set the extension to .txt no matter what.
+            sfdCotn.DefaultExt = ".txt";
+            sfdCotn.RestoreDirectory = false;
         }
-        //Declares a few variables to use
-        string fileToOpen, fileToSave, nameOfFile, nameOfFileExt;
-        int selectedIndex;
-        static public bool is64;
-        OpenFileDialog ofd = new OpenFileDialog(); //Creates an open File dialog for program to manipulate.
+
+        SaveFileDialog sfdCotn = new SaveFileDialog(); //Creates an open File dialog for program to manipulate.
+        OpenFileDialog ofdOsu = new OpenFileDialog();
 
         private void openOsuFileButton_Click(object sender, EventArgs e)
         {
-            switch (selectedIndex)
-            {
-                case 0:
-                    ofd.Filter = "Osu Beatmap File|*.osu"; //Sets the default to only show .osu files.
-                    //Checks the bool created before then uses it to set the default directory.
-                    if (is64)
-                    {
-                        ofd.InitialDirectory = "C:\\Program Files (x86)\\osu!\\Songs";
-                    }
-                    else
-                    {
-                        ofd.InitialDirectory = "C:\\Program Files\\osu!\\Songs";
-                    }
-
-                    ofd.RestoreDirectory = true; //Just to make sure that multiple runs come to the same directory. It may be unneeded.
-                    break;
-                default:
-                    break;
-            }
-
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (ofdOsu.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //If the OK button was pressed. It sets a variable to contain the file path. It also sets the textbox to have the path as well.
                 nameOfFile = "";
-                textBox1.Text = ofd.FileName;
-                fileToOpen = ofd.FileName;
+                textBox1.Text = ofdOsu.FileName;
+                fileToOpen = ofdOsu.FileName;
 
-                StreamReader sr = new StreamReader(File.OpenRead(ofd.FileName)); //Opens the file to read
+                StreamReader sr = new StreamReader(File.OpenRead(ofdOsu.FileName)); //Opens the file to read
                 switch (selectedIndex)
                 {
                     case 0:
@@ -96,30 +107,18 @@ namespace WindowsFormsApplication2
 
         private void saveLocationButton_Click(object sender, EventArgs e)
         {
-            SaveFileDialog ofd = new SaveFileDialog(); //Opens a Save file Dialog.
-            ofd.Filter = "Text Files|*.txt";
-            ofd.AddExtension = true; //Makes sure to set the extension to .txt no matter what.
-            ofd.DefaultExt = ".txt";
-            ofd.RestoreDirectory = true;
-            ofd.FileName = nameOfFileExt.ToUpper() + ".TXT";
-            if (is64)
-            {
-                ofd.InitialDirectory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Crypt of the NecroDancer\\data\\custom_music";
-            }
-            else
-            {
-                ofd.InitialDirectory = "C:\\Program Files\\Steam\\steamapps\\common\\Crypt of the NecroDancer\\data\\custom_music";
-            }
 
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK && ofd.FileName.IndexOf(".txt") != -1)
+            sfdCotn.FileName = nameOfFileExt.ToUpper() + ".txt";
+
+            if (sfdCotn.ShowDialog() == System.Windows.Forms.DialogResult.OK && sfdCotn.FileName.IndexOf(".txt") != -1)
             {
-                textBox2.Text = ofd.FileName; //Sets the final path of the file to save.
-                fileToSave = ofd.FileName;
+                textBox2.Text = sfdCotn.FileName; //Sets the final path of the file to save.
+                fileToSave = sfdCotn.FileName;
             }
-            else if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            else if (sfdCotn.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                textBox2.Text = ofd.FileName + ".txt"; //Sets the final path of the file to save.
-                fileToSave = ofd.FileName + ".txt";
+                textBox2.Text = sfdCotn.FileName + ".txt"; //Sets the final path of the file to save.
+                fileToSave = sfdCotn.FileName + ".txt";
             }
             convertOkButton.Enabled = true; //Activates step 4 button.
             textBox2.Enabled = true;

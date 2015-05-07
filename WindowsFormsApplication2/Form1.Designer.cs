@@ -284,6 +284,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.AliceBlue;
             this.ClientSize = new System.Drawing.Size(484, 308);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label10);
@@ -305,6 +306,8 @@
             this.Controls.Add(this.openOsuFileButton);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.convertOkButton);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "DeamonHunter\'s Conversion Tool";
