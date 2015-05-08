@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Media;
+using TagLib;
 
 namespace WindowsFormsApplication2
 {
@@ -25,10 +27,10 @@ namespace WindowsFormsApplication2
             //This if statement checks if the directory exists. 
             
             //This is to find the initial directories of both the osu opener and the cotn opener.
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt")) //Sees if a settings file exists.
+            if (System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt")) //Sees if a settings file exists.
             {
                 //If it does, it opens it up and reads the two lines within
-                StreamReader sr = new StreamReader(File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
+                StreamReader sr = new StreamReader(System.IO.File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
                 OsuDef = sr.ReadLine();
                 CotNDef = sr.ReadLine();
                 sr.Dispose();
@@ -37,7 +39,7 @@ namespace WindowsFormsApplication2
             {
                 //If it doesn't, it attempts to create the file (and the directory)
                 Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool");
-                StreamWriter sw = new StreamWriter(File.Create(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
+                StreamWriter sw = new StreamWriter(System.IO.File.Create(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
 
                 //This then calls form 3 and waits for the user to input
                 Form3 f3 = new Form3();
@@ -76,7 +78,7 @@ namespace WindowsFormsApplication2
                 textBox1.Text = ofdOsu.FileName;
                 fileToOpen = ofdOsu.FileName;
 
-                StreamReader sr = new StreamReader(File.OpenRead(ofdOsu.FileName)); //Opens the file to read
+                StreamReader sr = new StreamReader(System.IO.File.OpenRead(ofdOsu.FileName)); //Opens the file to read
  
                 while (nameOfFile == "") //As the file was set to "" before it will force this loop.
                 {
@@ -129,10 +131,11 @@ namespace WindowsFormsApplication2
         private void convertOkButton_Click(object sender, EventArgs e)
         {
             //Now this is where it gets crazy. Sorry for my crappy code writing skills.
+            string musicOriginalPath = fileToOpen.Remove(fileToOpen.LastIndexOf("\\")) + "\\" + nameOfFileExt.Remove(0, 1);
+            string musicFilePath = fileToSave.Remove(fileToSave.LastIndexOf(".txt"));
+            
             if (checkBox1.Checked) //If copy file was selected then it copies the file with a few edited values.
             {
-                string musicOriginalPath = fileToOpen.Remove(fileToOpen.LastIndexOf("\\")) + "\\" + nameOfFileExt.Remove(0, 1);
-                string musicFilePath = fileToSave.Remove(fileToSave.LastIndexOf(".txt"));
                 try //Added some error catching. Just in case file is non existant.
                 {
                     System.IO.File.Copy(musicOriginalPath, musicFilePath, true);
@@ -157,8 +160,8 @@ namespace WindowsFormsApplication2
                 float bpmMilliseconds, carryOverBpm = 0, time = 0, carryOverOffset = 0, startOffset = 0;
                 //A whole lot of variables called for the remainder of this function.
 
-                StreamReader sr = new StreamReader(File.OpenRead(fileToOpen)); //Opens the file to read.
-                StreamWriter sw = new StreamWriter(File.Create(fileToSave)); //Opens the file to write. It will overwrite existing files.
+                StreamReader sr = new StreamReader(System.IO.File.OpenRead(fileToOpen)); //Opens the file to read.
+                StreamWriter sw = new StreamWriter(System.IO.File.Create(fileToSave)); //Opens the file to write. It will overwrite existing files.
 
                 while (found == false) //Finds where the timing points are
                 {
@@ -171,9 +174,9 @@ namespace WindowsFormsApplication2
                     }
                 }
 
-                while (continueRead == true) //Sets a statement that is only fuffilled if the final beat was found.
+                while (continueRead) //Sets a statement that is only fuffilled if the final beat was found.
                 {
-                    if (firstRun == true) //Completes variables that are empty. Otherwise it will use the previous runs variables.
+                    if (firstRun) //Completes variables that are empty. Otherwise it will use the previous runs variables.
                     {
                         //Finds the initial starting time of the first beat
                         line = sr.ReadLine();
@@ -210,48 +213,19 @@ namespace WindowsFormsApplication2
                         f2.enterDetails("The new bpm in milliseconds is " + bpmMilliseconds);
                     }
 
- 
-                    carryOverBpm = -1; //Needed to make the program acces the following while loop.
-                    while (carryOverBpm < 0) //InHerited timing sections have a negetive Bpm value. As such it's needed to find the next value.
+                    do
                     {
-                        f2.enterDetails("The Bpm was lower than 0. Finding the next timing point with bpm change.");
+                        f2.enterDetails("Finding the next timing point with bpm change.");
                         carryOverLine = sr.ReadLine(); //Reads the line.
                         if (carryOverLine == "" || carryOverLine == null) //Checks if the value was null. This would then mean that it reached the end of the Timing Sections.
                         {
-                            f2.enterDetails("No suitable timing section found. Finding last note for end time.");
-                            string result = "", result2 = ""; //Sets three variables
-                            int i = 0;
-                            while (result2 != "[HitObjects]") //Checks where the hit Object section is
-                            {
-                                result = result2;
-                                result2 = sr.ReadLine();
-                                i++;
-                                f2.enterDetails(i + " " + result2);
-                            }
-                            result2 = "adasda"; //Just so it doesn't trick the next while loop.
-                            f2.enterDetails("Found the HitObjects section.");
-                            i = 0;
-                            while (result2 != null) //Checks until the very last line. (Or after Hitobjects are finished.)
-                            {
-                                i++;
-                                result = result2; //Makes sure that the value is actually there.
-                                result2 = sr.ReadLine();
-                                f2.enterDetails(i + " " + result2);
-                            }
-                            finishTimeFound = true; //Sets two variable that control the overall while loop
+                            TagLib.File musicFile = TagLib.File.Create(musicOriginalPath);
+
+                            carryOverOffset = Convert.ToSingle(musicFile.Properties.Duration.TotalMilliseconds);
+                            MessageBox.Show(carryOverOffset.ToString());
+                            finishTimeFound = true;
                             continueRead = false;
-                            f2.enterDetails("Found the final beat. It is " + result);
-                            string tempLine2 = result; //Creats a temporary Lne.
-                            f2.enterDetails("Creating temporary line with " + result);
-                            tempLine2 = tempLine2.Remove(0, tempLine2.IndexOf(",") + 1);
-                            tempLine2 = tempLine2.Remove(0, tempLine2.IndexOf(",") + 1); //Removes the first two sections. These are the coordinates of the hitobject.
-                            f2.enterDetails("Changed temporary line to " + tempLine2);
-                            tempLine2 = tempLine2.Remove(tempLine2.IndexOf(",")); //Removes the rest of the line.
-                            f2.enterDetails("Changed temp line to " + tempLine2);
-                            carryOverOffset = Convert.ToSingle(tempLine2);
-                            f2.enterDetails("The song length is " + carryOverOffset + " milliseconds");
-                            carryOverBpm = bpmMilliseconds; //Sets the bpm to this to get out of while loop
-                            f2.enterDetails("Set Bpm to " + bpmMilliseconds);
+                            carryOverBpm = bpmMilliseconds;
                         }
                         else
                         {
@@ -269,29 +243,21 @@ namespace WindowsFormsApplication2
                             carryOverOffset = Convert.ToSingle(tempLine2.Remove(position));
                             f2.enterDetails("The new offset will be " + carryOverOffset);
                         }
-                    }
+                    } while (carryOverBpm <= 0);
+
                     f2.enterDetails("Creating times from " + time + " to " + carryOverOffset);
                     while (time < carryOverOffset / 1000) //A while loop that checks whether the beats are still under time.
                     {
-                        if (finishTimeFound == true) //May be an unnecessary if function. I forgot if this actually did anything.
+                        if (finishTimeFound) //May be an unnecessary if function. I forgot if this actually did anything.
                         {
-                            if (time < 0) //Checks if time is below zero as some offsets are in the negeatives
-                            {
-                                time += (bpmMilliseconds / 1000);
-                            }
-                            else
+                            if (time >= 0) //Checks if time is below zero as some offsets are in the negeatives
                             {
                                 if (carryOverOffset / 1000 > time + (bpmMilliseconds / 1000)) //checks if it will go over the next offset.
                                 {
                                     sw.WriteLine(time);
-                                    time += (bpmMilliseconds / 1000);
-                                }
-                                else
-                                {
-                                    sw.WriteLine(time);
-                                    time = carryOverOffset; //Makes sure that it sets the values correctly.
                                 }
                             }
+                            time += (bpmMilliseconds / 1000);
                         }
                         else //I honestly don't know if this is needed anymore.
                         {
@@ -309,11 +275,12 @@ namespace WindowsFormsApplication2
                                 else
                                 {
                                     sw.WriteLine(time);
-                                    time = carryOverOffset / 1000;
+                                    time = carryOverOffset / 1000 + 1;
                                 }
                             }
                         }
                     }
+
                     f2.enterDetails("Completed a round."); //Adds a line to say that while loop has finished a runthrough
                 }
                 sr.Dispose(); //Deletes the two files from memory.

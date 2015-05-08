@@ -31,3 +31,6 @@ E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplic
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Properties.Resources.resources
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\Deamon's conversion tool.csproj.GenerateResource.Cache
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Form3.resources
+E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\bin\Release\policy.2.0.taglib-sharp.dll
+E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\bin\Release\taglib-sharp.dll
+E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\bin\Release\policy.2.0.taglib-sharp.config
