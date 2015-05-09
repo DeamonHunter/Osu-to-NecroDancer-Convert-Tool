@@ -16,7 +16,8 @@ namespace WindowsFormsApplication2
     public partial class Form1 : Form
     {
         //Declares a few variables to use
-        string fileToOpen, fileToSave, nameOfFile, nameOfFileExt;
+        string fileToOpen, fileToSave, nameOfFile, songNameOfFile, nameOfFileExt;
+        string[] performers = new string[1];
         int selectedIndex;
         static public bool is64;
         public string CotNDef, OsuDef;
@@ -90,9 +91,38 @@ namespace WindowsFormsApplication2
                         nameOfFileExt = output; //Sets the name of the song with extension.
                         output = output.Remove(output.Length - 4); //Removes extension.
                         nameOfFile = output;
-                    }    
+                    }
+                    
 
                 }
+
+                sr = new StreamReader(System.IO.File.OpenRead(ofdOsu.FileName));
+                songNameOfFile = "";
+                while (songNameOfFile == "") //As the file was set to "" before it will force this loop.
+                {
+                    string line; //Sets a variable to store the data of the line
+                    line = sr.ReadLine();
+                    if (line.IndexOf("Title:") != -1) //Checks if "AudioFilename:" exists within the line.
+                    {
+                        string output = line.Remove(0, 6); //Removes AudioFileName:
+                        songNameOfFile = output;
+                    }
+
+                }
+                sr = new StreamReader(System.IO.File.OpenRead(ofdOsu.FileName));
+                performers[0] = "";
+                while (performers[0] == "") //As the file was set to "" before it will force this loop.
+                {
+                    string line; //Sets a variable to store the data of the line
+                    line = sr.ReadLine();
+                    if (line.IndexOf("Artist:") != -1) //Checks if "AudioFilename:" exists within the line.
+                    {
+                        string output = line.Remove(0, 7); //Removes AudioFileName:
+                        performers[0] = output;
+                    }
+
+                }
+
                 sr.Dispose(); //Removes the file from memory.
                 if (nameOfFileExt.IndexOf(".mp3") != -1)
                 {
@@ -139,6 +169,14 @@ namespace WindowsFormsApplication2
                 try //Added some error catching. Just in case file is non existant.
                 {
                     System.IO.File.Copy(musicOriginalPath, musicFilePath, true);
+                    if (fixSongCheckBox.Checked)
+                    {
+                        MessageBox.Show(songNameOfFile + ":" + performers[0]);
+                        TagLib.File musicFile = TagLib.File.Create(musicFilePath);
+                        musicFile.Tag.Title = songNameOfFile;
+                        musicFile.Tag.Performers = performers;
+                        musicFile.Save();
+                    }
                 }
                 catch
                 {
@@ -153,7 +191,7 @@ namespace WindowsFormsApplication2
                 f2.activateDebugWindow();
             }
                 f2.enterDetails("Starting sequence for .osu files.");
-                bool found = false, continueRead = true, finishTimeFound = false, firstRun = true;
+                bool found = false, continueRead = true, firstRun = true;
                 int lines = 0, position;
                 string carryOverLine = "", line;
                 char comma = Convert.ToChar(",");
@@ -222,10 +260,9 @@ namespace WindowsFormsApplication2
                             TagLib.File musicFile = TagLib.File.Create(musicOriginalPath);
 
                             carryOverOffset = Convert.ToSingle(musicFile.Properties.Duration.TotalMilliseconds);
-                            MessageBox.Show(carryOverOffset.ToString());
-                            finishTimeFound = true;
                             continueRead = false;
                             carryOverBpm = bpmMilliseconds;
+                            f2.enterDetails("The final offset will be " + carryOverOffset);
                         }
                         else
                         {
@@ -248,37 +285,14 @@ namespace WindowsFormsApplication2
                     f2.enterDetails("Creating times from " + time + " to " + carryOverOffset);
                     while (time < carryOverOffset / 1000) //A while loop that checks whether the beats are still under time.
                     {
-                        if (finishTimeFound) //May be an unnecessary if function. I forgot if this actually did anything.
+                        if (time >= 0) //Checks if time is below zero as some offsets are in the negeatives
                         {
-                            if (time >= 0) //Checks if time is below zero as some offsets are in the negeatives
+                            if (carryOverOffset / 1000 > time + (bpmMilliseconds / 1000)) //checks if it will go over the next offset.
                             {
-                                if (carryOverOffset / 1000 > time + (bpmMilliseconds / 1000)) //checks if it will go over the next offset.
-                                {
-                                    sw.WriteLine(time);
-                                }
-                            }
-                            time += (bpmMilliseconds / 1000);
-                        }
-                        else //I honestly don't know if this is needed anymore.
-                        {
-                            if (time < 0)
-                            {
-                                time += (bpmMilliseconds / 1000);
-                            }
-                            else
-                            {
-                                if (carryOverOffset / 1000 > time + (bpmMilliseconds / 1000))
-                                {
-                                    sw.WriteLine(time);
-                                    time += (bpmMilliseconds / 1000);
-                                }
-                                else
-                                {
-                                    sw.WriteLine(time);
-                                    time = carryOverOffset / 1000 + 1;
-                                }
+                                sw.WriteLine(time);
                             }
                         }
+                        time += (bpmMilliseconds / 1000);                                     
                     }
 
                     f2.enterDetails("Completed a round."); //Adds a line to say that while loop has finished a runthrough

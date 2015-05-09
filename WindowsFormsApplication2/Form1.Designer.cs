@@ -48,6 +48,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.fixSongCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // convertOkButton
@@ -59,9 +60,9 @@
             this.convertOkButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
             this.convertOkButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.convertOkButton.ForeColor = System.Drawing.Color.Black;
-            this.convertOkButton.Location = new System.Drawing.Point(394, 284);
+            this.convertOkButton.Location = new System.Drawing.Point(328, 307);
             this.convertOkButton.Name = "convertOkButton";
-            this.convertOkButton.Size = new System.Drawing.Size(75, 23);
+            this.convertOkButton.Size = new System.Drawing.Size(141, 23);
             this.convertOkButton.TabIndex = 0;
             this.convertOkButton.Text = "Convert";
             this.convertOkButton.UseVisualStyleBackColor = false;
@@ -111,7 +112,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(6, 170);
+            this.label4.Location = new System.Drawing.Point(6, 194);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(380, 17);
             this.label4.TabIndex = 7;
@@ -121,7 +122,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 153);
+            this.label5.Location = new System.Drawing.Point(6, 176);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 17);
             this.label5.TabIndex = 6;
@@ -136,7 +137,7 @@
             this.saveLocationButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Silver;
             this.saveLocationButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveLocationButton.ForeColor = System.Drawing.Color.Black;
-            this.saveLocationButton.Location = new System.Drawing.Point(394, 188);
+            this.saveLocationButton.Location = new System.Drawing.Point(394, 211);
             this.saveLocationButton.Name = "saveLocationButton";
             this.saveLocationButton.Size = new System.Drawing.Size(75, 23);
             this.saveLocationButton.TabIndex = 9;
@@ -148,9 +149,9 @@
             // 
             this.textBox2.Cursor = System.Windows.Forms.Cursors.Default;
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(9, 190);
+            this.textBox2.Location = new System.Drawing.Point(12, 214);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(379, 20);
+            this.textBox2.Size = new System.Drawing.Size(375, 20);
             this.textBox2.TabIndex = 8;
             this.textBox2.TabStop = false;
             // 
@@ -158,7 +159,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 230);
+            this.label6.Location = new System.Drawing.Point(6, 253);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(205, 17);
             this.label6.TabIndex = 11;
@@ -168,7 +169,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(6, 213);
+            this.label7.Location = new System.Drawing.Point(6, 236);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 17);
             this.label7.TabIndex = 10;
@@ -177,18 +178,18 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(9, 250);
+            this.checkBox1.Location = new System.Drawing.Point(9, 156);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(76, 17);
+            this.checkBox1.Size = new System.Drawing.Size(143, 17);
             this.checkBox1.TabIndex = 12;
-            this.checkBox1.Text = "Copy song";
+            this.checkBox1.Text = "Copy song to song folder";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(6, 287);
+            this.label8.Location = new System.Drawing.Point(9, 310);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(94, 17);
             this.label8.TabIndex = 14;
@@ -198,7 +199,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(6, 270);
+            this.label9.Location = new System.Drawing.Point(6, 293);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 17);
             this.label9.TabIndex = 13;
@@ -207,7 +208,7 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(91, 250);
+            this.checkBox2.Location = new System.Drawing.Point(9, 273);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(121, 17);
             this.checkBox2.TabIndex = 15;
@@ -217,7 +218,7 @@
             // showDebugCheckBox
             // 
             this.showDebugCheckBox.AutoSize = true;
-            this.showDebugCheckBox.Location = new System.Drawing.Point(218, 250);
+            this.showDebugCheckBox.Location = new System.Drawing.Point(187, 273);
             this.showDebugCheckBox.Name = "showDebugCheckBox";
             this.showDebugCheckBox.Size = new System.Drawing.Size(141, 17);
             this.showDebugCheckBox.TabIndex = 16;
@@ -280,12 +281,23 @@
             this.comboBox1.TabIndex = 19;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // fixSongCheckBox
+            // 
+            this.fixSongCheckBox.AutoSize = true;
+            this.fixSongCheckBox.Location = new System.Drawing.Point(187, 156);
+            this.fixSongCheckBox.Name = "fixSongCheckBox";
+            this.fixSongCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.fixSongCheckBox.TabIndex = 20;
+            this.fixSongCheckBox.Text = "Fix song metadata?";
+            this.fixSongCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.AliceBlue;
-            this.ClientSize = new System.Drawing.Size(484, 308);
+            this.ClientSize = new System.Drawing.Size(484, 343);
+            this.Controls.Add(this.fixSongCheckBox);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label11);
@@ -338,6 +350,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.CheckBox fixSongCheckBox;
     }
 }
 
