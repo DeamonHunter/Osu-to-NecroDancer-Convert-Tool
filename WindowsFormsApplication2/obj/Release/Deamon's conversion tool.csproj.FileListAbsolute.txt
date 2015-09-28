@@ -27,7 +27,6 @@ E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplic
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\Deamon's conversion tool.csprojResolveAssemblyReference.cache
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Form1.resources
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Form2.resources
-E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Manual_Editer.resources
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Properties.Resources.resources
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\Deamon's conversion tool.csproj.GenerateResource.Cache
 E:\Deamon\My Documents\GitHub\Osu-to-NecroDancer-Convert-Tool\WindowsFormsApplication2\obj\Release\WindowsFormsApplication2.Form3.resources

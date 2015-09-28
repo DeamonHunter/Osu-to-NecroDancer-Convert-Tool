@@ -16,11 +16,9 @@ namespace WindowsFormsApplication2
     public partial class Form1 : Form
     {
         //Declares a few variables to use
-        string fileToOpen, fileToSave, nameOfFile, songNameOfFile, nameOfFileExt;
+        string fileToOpen, fileToSave, copyLocation, songNameOfFile, nameOfFile;
         string[] performers = new string[1];
-        int selectedIndex;
-        static public bool is64;
-        public string CotNDef, OsuDef;
+        public string CotNDir, OsuDir, SongDir;
 
         public Form1()
         {
@@ -32,8 +30,9 @@ namespace WindowsFormsApplication2
             {
                 //If it does, it opens it up and reads the two lines within
                 StreamReader sr = new StreamReader(System.IO.File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + "Osu To NecroDancer Convert Tool\\Settings.txt"));
-                OsuDef = sr.ReadLine();
-                CotNDef = sr.ReadLine();
+                OsuDir = sr.ReadLine();
+                CotNDir = sr.ReadLine();
+                SongDir = sr.ReadLine();
                 sr.Dispose();
             }
             else
@@ -47,27 +46,33 @@ namespace WindowsFormsApplication2
                 f3.ShowDialog();
 
                 //After inputting variables, these are then defined...
-                OsuDef = f3.OsuDef;
-                CotNDef = f3.CotNDef;
+                OsuDir = f3.OsuDir;
+                CotNDir = f3.CotNDir;
+                SongDir = f3.SongDir;
                 //then written into the file
-                sw.WriteLine(OsuDef);
-                sw.WriteLine(CotNDef);
+                sw.WriteLine(OsuDir);
+                sw.WriteLine(CotNDir);
+                sw.WriteLine(SongDir);
                 sw.Flush();
                 sw.Dispose();
             }
 
-            ofdOsu.InitialDirectory = OsuDef; //Sets default path for the osu button
+            ofdOsu.InitialDirectory = OsuDir; //Sets default path for the osu button
             ofdOsu.Filter = "Osu Beatmap File|*.osu"; //Sets the default to only show .osu files.
             ofdOsu.RestoreDirectory = false;
 
-            sfdCotn.InitialDirectory = CotNDef; //Sets default path for the sotn button
+            sfdCotn.InitialDirectory = CotNDir; //Sets default path for the sotn button
             sfdCotn.Filter = "Text Files|*.txt";
             sfdCotn.AddExtension = true; //Makes sure to set the extension to .txt no matter what.
             sfdCotn.DefaultExt = ".txt";
             sfdCotn.RestoreDirectory = false;
+
+            sfdCopy.InitialDirectory = SongDir;
+            sfdCotn.RestoreDirectory = false;
         }
 
         SaveFileDialog sfdCotn = new SaveFileDialog(); //Creates an open File dialog for program to manipulate.
+        SaveFileDialog sfdCopy = new SaveFileDialog();
         OpenFileDialog ofdOsu = new OpenFileDialog();
 
         private void openOsuFileButton_Click(object sender, EventArgs e)
@@ -88,12 +93,9 @@ namespace WindowsFormsApplication2
                     if (line.IndexOf("AudioFilename:") != -1) //Checks if "AudioFilename:" exists within the line.
                     {
                         string output = line.Remove(0, 14); //Removes AudioFileName:
-                        nameOfFileExt = output; //Sets the name of the song with extension.
+                        nameOfFile = output.Trim(); //Sets the name of the song with extension.
                         output = output.Remove(output.Length - 4); //Removes extension.
-                        nameOfFile = output;
                     }
-                    
-
                 }
 
                 sr = new StreamReader(System.IO.File.OpenRead(ofdOsu.FileName));
@@ -124,13 +126,16 @@ namespace WindowsFormsApplication2
                 }
 
                 sr.Dispose(); //Removes the file from memory.
-                if (nameOfFileExt.IndexOf(".mp3") != -1)
+                if (nameOfFile.IndexOf(".mp3") != -1 || nameOfFile.IndexOf(".ogg") != -1)
                 {
-                    textBox2.Text = nameOfFile; //Sets the second textbox to have the file name. unessesary but is a little bit of feedback.
+                    fileToSave = CotNDir + "\\" + nameOfFile.ToUpper() + ".TXT"; //Sets the second textbox to have the file name. unessesary but is a little bit of feedback.
+                    textBox2.Text = fileToSave;
+                    copyLocation = SongDir + "\\" + nameOfFile;
+                    textBox3.Text = copyLocation;
                     saveLocationButton.Enabled = true; //Activates 2nd step button.
-                    convertOkButton.Enabled = false; //Incase the program has already ran through once.
+                    convertOkButton.Enabled = true; //Incase the program has already ran through once.
                     textBox1.Enabled = true;
-                    textBox2.Enabled = false;
+                    textBox2.Enabled = true;
                 }
                 else
                 {
@@ -142,45 +147,52 @@ namespace WindowsFormsApplication2
         private void saveLocationButton_Click(object sender, EventArgs e)
         {
 
-            sfdCotn.FileName = nameOfFileExt.ToUpper() + ".txt";
+            sfdCotn.FileName = nameOfFile.ToUpper() + ".TXT";
 
-            if (sfdCotn.ShowDialog() == System.Windows.Forms.DialogResult.OK && sfdCotn.FileName.IndexOf(".txt") != -1)
+            if (sfdCotn.ShowDialog() == System.Windows.Forms.DialogResult.OK && sfdCotn.FileName.IndexOf(".TXT") != -1)
             {
                 textBox2.Text = sfdCotn.FileName; //Sets the final path of the file to save.
                 fileToSave = sfdCotn.FileName;
             }
             else if (sfdCotn.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                textBox2.Text = sfdCotn.FileName + ".txt"; //Sets the final path of the file to save.
-                fileToSave = sfdCotn.FileName + ".txt";
+                textBox2.Text = sfdCotn.FileName + ".TXT"; //Sets the final path of the file to save.
+                fileToSave = sfdCotn.FileName + ".TXT";
             }
             convertOkButton.Enabled = true; //Activates step 4 button.
             textBox2.Enabled = true;
         }
 
+
+
         private void convertOkButton_Click(object sender, EventArgs e)
         {
+            string musicOriginalPath = fileToOpen.Remove(fileToOpen.LastIndexOf("\\")) + "\\" + nameOfFile;
+
             //Now this is where it gets crazy. Sorry for my crappy code writing skills.
-            string musicOriginalPath = fileToOpen.Remove(fileToOpen.LastIndexOf("\\")) + "\\" + nameOfFileExt.Remove(0, 1);
-            string musicFilePath = fileToSave.Remove(fileToSave.LastIndexOf(".txt"));
-            
-            if (checkBox1.Checked) //If copy file was selected then it copies the file with a few edited values.
+            if (checkBox1.CheckState == CheckState.Checked)
             {
-                try //Added some error catching. Just in case file is non existant.
+                string musicFilePath = copyLocation;
+                if (checkBox1.Checked) //If copy file was selected then it copies the file with a few edited values.
                 {
-                    System.IO.File.Copy(musicOriginalPath, musicFilePath, true);
-                    if (fixSongCheckBox.Checked)
-                    {
-                        MessageBox.Show(songNameOfFile + ":" + performers[0]);
-                        TagLib.File musicFile = TagLib.File.Create(musicFilePath);
-                        musicFile.Tag.Title = songNameOfFile;
-                        musicFile.Tag.Performers = performers;
-                        musicFile.Save();
+                    try //Added some error catching. Just in case file is non existant.
+                    {       
+                        if (System.IO.File.Exists(musicFilePath) != true)
+                        {
+                            System.IO.File.Copy(musicOriginalPath, musicFilePath, true);
+                            if (fixSongCheckBox.Checked)
+                            {
+                                TagLib.File musicFile = TagLib.File.Create(musicFilePath);
+                                musicFile.Tag.Title = songNameOfFile;
+                                musicFile.Tag.Performers = performers;
+                                musicFile.Save();
+                            }
+                        }
                     }
-                }
-                catch
-                {
-                    MessageBox.Show("Error: Unable to move file. File may be missing or the program may not have permission.", "Error");
+                    catch
+                    {
+                        MessageBox.Show("Error: Unable to move file. File may be missing or the program may not have permission to copy.", "Error");
+                    }
                 }
             }
 
@@ -297,61 +309,43 @@ namespace WindowsFormsApplication2
 
                     f2.enterDetails("Completed a round."); //Adds a line to say that while loop has finished a runthrough
                 }
-                sr.Dispose(); //Deletes the two files from memory.
-                sw.Dispose();
-                f2.enterDetails("Song Completed");
-                MessageBox.Show("Your song " + nameOfFile + " is completed", "Song Complete"); //Shows a messagebox to the user to notify them that the program is finished.
-            
+            sr.Dispose(); //Deletes the two files from memory.
+            sw.Dispose();
+            f2.enterDetails("Song Completed");
+            //Shows a messagebox to the user to notify them that the program is finished.
+            MessageBox.Show("Your song " + nameOfFile + " is completed", "Song Complete"); 
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            selectedIndex = (int)comboBox1.SelectedIndex; //Upon the combobox updating, it will check the value.
-            switch (selectedIndex) //It then sets the value for the program to use while setting up the final parts in most steps.
+            if(checkBox1.CheckState == CheckState.Checked)
             {
-                case 0: //The Default, .osu files.
-                    label3.Text = "Open a .osu file from your preferred song.";
-                    convertOkButton.Enabled = false; 
-                    openOsuFileButton.Enabled = true; //Makes sure that all steps are set up properly so program does not break.
-                    saveLocationButton.Enabled = false;
-                    textBox1.Text = "Please select a .osu file for the program to convert.";
-                    textBox1.Enabled = false;
-                    textBox2.Enabled = false;
-                    textBox2.Text = "";
-                    checkBox1.Checked = false;
-                    checkBox2.Checked = false;
-                    showDebugCheckBox.Checked = false;
-                    break;
-                case 2: //To be decided.
-                    label3.Text = "Open a *To Be decided* file from your preferred song.";
-                    convertOkButton.Enabled = false;
-                    openOsuFileButton.Enabled = false;
-                    saveLocationButton.Enabled = false;
-                    textBox1.Text = "This option is not available just yet.";
-                    textBox1.Enabled = false;
-                    textBox2.Enabled = false;
-                    textBox2.Text = "";
-                    checkBox1.Checked = false;
-                    checkBox2.Checked = false;
-                    showDebugCheckBox.Checked = false;
-                    break;
-                case 1: //Will open up a new form with the ability to have manually set options. (Coming Soon).
-                    Manual_Editer f3 = new Manual_Editer();
-                    f3.Show();
-                    label3.Text = "Manual editing.";
-                    convertOkButton.Enabled = false;
-                    openOsuFileButton.Enabled = false;
-                    saveLocationButton.Enabled = false;
-                    textBox1.Text = "This option opens up a new form.";
-                    textBox1.Enabled = false;
-                    textBox2.Enabled = false;
-                    textBox2.Text = "";
-                    checkBox1.Checked = false;
-                    checkBox2.Checked = false;
-                    showDebugCheckBox.Checked = false;
-                    break;
-                default:
-                    break;
+                if (textBox2.Enabled == true)
+                {
+                    textBox3.Enabled = true;
+                    button1.Enabled = true;
+                }
+                else
+                {
+                    textBox3.Enabled = false;
+                    button1.Enabled = false;
+                }
+            }
+            else
+            {
+                textBox3.Enabled = false;
+                button1.Enabled = false;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sfdCopy.FileName = nameOfFile;
+
+            if (sfdCopy.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                textBox2.Text = sfdCotn.FileName; //Sets the final path of the file to save.
+                copyLocation = sfdCotn.FileName;
             }
         }
     }

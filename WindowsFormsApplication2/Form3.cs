@@ -13,8 +13,9 @@ namespace WindowsFormsApplication2
 {
     public partial class Form3 : Form
     {
-        public string CotNDef {get; set;}
-        public string OsuDef {get; set;}
+        public string CotNDir {get; set;}
+        public string OsuDir {get; set;}
+        public string SongDir { get; set; }
         public Form3()
         {
             InitializeComponent();
@@ -29,8 +30,8 @@ namespace WindowsFormsApplication2
             if (folderBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //If the OK button was pressed. It sets a variable to contain the file path. It also sets the textbox to have the path as well.
-                OsuDef = folderBrowser.SelectedPath;
-                textBox1.Text = OsuDef;
+                OsuDir = folderBrowser.SelectedPath;
+                textBox1.Text = OsuDir;
             }
             
         }
@@ -39,15 +40,31 @@ namespace WindowsFormsApplication2
             if (folderBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //If the OK button was pressed. It sets a variable to contain the file path. It also sets the textbox to have the path as well.
-                CotNDef = folderBrowser.SelectedPath;
-                textBox3.Text = CotNDef;
+                CotNDir = folderBrowser.SelectedPath;
+                textBox3.Text = CotNDir;
             }
 
         }
         private void complete_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (OsuDir != null && SongDir != null && CotNDir != null)
+            {
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Make sure all three options are chosen");
+            }
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (folderBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                //If the OK button was pressed. It sets a variable to contain the file path. It also sets the textbox to have the path as well.
+                SongDir = folderBrowser.SelectedPath;
+                textBox2.Text = SongDir;
+            }
         }
    
     }
