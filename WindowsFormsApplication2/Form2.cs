@@ -24,7 +24,7 @@ namespace WindowsFormsApplication2
 
         public void enterDetails(string entered)
         {
-            richTextBox1.Text = entered + "\n" + richTextBox1.Text; //Adds the given line to the top of the textbox.
+            //richTextBox1.Text = entered + "\n" + richTextBox1.Text; //Adds the given line to the top of the textbox.
         }
     }
 }
